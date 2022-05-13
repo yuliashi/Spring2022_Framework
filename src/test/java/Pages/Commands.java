@@ -24,7 +24,7 @@ public class Commands {
     }
 
     // Create a local method to click on the webElement after scroll
-    public void clickItWithScroll(By locator) {
+    public void clickItAfterScroll(By locator) {
         scrollToElement(locator).click();
     }
 
