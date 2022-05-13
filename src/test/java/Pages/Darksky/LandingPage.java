@@ -10,6 +10,11 @@ public class LandingPage extends Commands {
 
     // Locators of Landing Page elements
     By timeMachineLocator = By.xpath("//a[text()='Time Machine' or text()='TIME MACHINE']");
+    By todayBarMinLocator = By.xpath("//a[@class = 'day revealed']//span[@class = 'minTemp']");
+    By todayBarMaxLocator = By.xpath("//a[@class = 'day revealed']//span[@class = 'maxTemp']");
+    By dayDetailsMinTempLocator = By.xpath("(//div[@class = 'dayDetails revealed']//span[@class = 'temp'])[1]");
+    By dayDetailsMaxTempLocator = By.xpath("(//div[@class = 'dayDetails revealed']//span[@class = 'temp'])[2]");
+    By dailyDetailsExpandLocator1 = By.xpath("(//a[@class = 'day'])[1]");
 
 
     // Method to interact with Landing Page elements
@@ -29,7 +34,7 @@ public class LandingPage extends Commands {
 
     public void scrollToBottom() {
         /**
-         * 3. scroll upto bottom of the page
+         * 3. scroll to the bottom of the page
          *
          * "window.scrollTo(0, document.body.scrollHeight)"
          */
@@ -39,11 +44,40 @@ public class LandingPage extends Commands {
 
     }
 
+    // method to click Time Machine button
+    public void clickOnTimeMachine () {
+        clickIt(timeMachineLocator);
+    }
+
+    public void scrollToTimeMachineByPixel () {
+        JavascriptExecutor js =  (JavascriptExecutor) MyDriver.getDriver();
+        js.executeScript("scrollBy(0,900)");
+
+    }
+
+
+
+    //click on Daily details expand button (current day)
+    public void expandDailyDetailsForToday () {
+        clickIt(dailyDetailsExpandLocator1);
+    }
+
+    //find the value of the current day temperature on the bar
+
+    public int findTempValue (By locator) {
+        String initial = findWebElement(locator).getText();
+        String [] array = initial.split("˚");
+        String answer = array[0];
+        int answerInt = Integer.parseInt(answer);
+
+        return answerInt;
+    }
+
 
     // method to check if Time Machine button is displayed
 
 
-    // method to click Time Machine button
+
 
 
 
