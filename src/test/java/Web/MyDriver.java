@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class MyDriver {
 
-    private static WebDriver driver;
+    public static WebDriver driver;
 
     public static void launchUrlOnNewWindow(String url) {
         System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");

@@ -1,6 +1,7 @@
 package Testcases;
 
 import Helper.Misc;
+import Pages.Facebook.LandingPage;
 import Web.MyDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -96,23 +97,30 @@ public class Practice {
 
             MyDriver.launchUrlOnNewWindow("https://www.facebook.com/");
 
-            MyDriver.getDriver().findElement(By.linkText("Facebook Pay")).click();
-            MyDriver.getDriver().findElement(By.linkText("Oculus")).click();
-            MyDriver.getDriver().findElement(By.linkText("Instagram")).click();
-            MyDriver.getDriver().findElement(By.linkText("Portal")).click();
-            MyDriver.getDriver().findElement(By.linkText("Bulletin")).click();
+            Misc.pause(3);
+
+            String originalWindow = MyDriver.getDriver().getWindowHandle();
+
+            Pages.Facebook.LandingPage lpage = new Pages.Facebook.LandingPage();
+            lpage.clickFBPaylink();
+            lpage.clickOculusLink();
+            lpage.clickInstagramLink();
+            lpage.clickPortalLink();
+            lpage.clickBulletinLink();
 
             Set<String> allHandles = MyDriver.getDriver().getWindowHandles();
+            String pageToRemainOpen = "Instagram";
 
             for (String handle : allHandles) {
                     MyDriver.getDriver().switchTo().window(handle);
                     String title = MyDriver.getDriver().getTitle();
-                    if (!title.equalsIgnoreCase("Instagram")) {
+                    if (!title.equalsIgnoreCase(pageToRemainOpen)) {
                         MyDriver.getDriver().close();
-
                     }
 
             }
+
+            MyDriver.getDriver().switchTo().window(originalWindow);
 
 
             Misc.pause(2);
@@ -125,7 +133,7 @@ public class Practice {
 
             Misc.pause(3);
 
-           WebElement logInButtonIG = MyDriver.getDriver().findElement(By.xpath("//button/div[text()  = 'Log In']"));
+            WebElement logInButtonIG = MyDriver.getDriver().findElement(By.xpath("//button/div[text()  = 'Log In']"));
 
             boolean isLogInEnabledIG = logInButtonIG.isEnabled();
 

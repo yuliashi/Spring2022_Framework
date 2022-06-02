@@ -5,6 +5,8 @@ import Pages.Commands;
 import Web.MyDriver;
 import org.openqa.selenium.By;
 
+import java.util.Set;
+
 public class LandingPage extends Commands {
 
     // Variables (Locators)
@@ -12,6 +14,11 @@ public class LandingPage extends Commands {
     By loginPassLocator = By.id("pass");
     By loginButtonLocator = By.tagName("button");
     By createNewAccountBtnLocator = By.xpath("//a[@data-testid='open-registration-form-button']");
+    By FBPayLocator = By.linkText("Facebook Pay");
+    By oculusLinkLocator = By.linkText("Oculus");
+    By instagramLinkLocator = By.linkText("Instagram");
+    By portalLinkLocator = By.linkText("Portal");
+    By bulletinLinkLocator = By.linkText("Bulletin");
 
 
     // Methods (to interact with webElements present on this webpage)
@@ -30,6 +37,26 @@ public class LandingPage extends Commands {
         clickIt(loginButtonLocator);
     }
 
+    public void clickFBPaylink () {
+        clickIt(FBPayLocator);
+    }
+
+    public void clickOculusLink () {
+        clickIt(oculusLinkLocator);
+    }
+
+    public void clickInstagramLink () {
+        clickIt(instagramLinkLocator);
+    }
+
+    public void clickPortalLink () {
+        clickIt(portalLinkLocator);
+    }
+
+    public void clickBulletinLink () {
+        clickIt(bulletinLinkLocator);
+    }
+
     public void clickCreateNewAccountBtn() {
         // MyDriver.getDriver().findElement(createNewAccountBtnLocator).click();
         clickIt(createNewAccountBtnLocator);
@@ -42,5 +69,13 @@ public class LandingPage extends Commands {
     public boolean isCreateNewAccountBtnEnabled() {
         return isElementEnabled(createNewAccountBtnLocator);
     }
+
+    public int getTheNumberOfHandles () {
+        Set<String> allHandles = MyDriver.getDriver().getWindowHandles();
+
+        int numberOfWindows = allHandles.size();
+        return numberOfWindows;
+    }
+
 
 }
