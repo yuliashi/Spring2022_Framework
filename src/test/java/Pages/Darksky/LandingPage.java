@@ -1,10 +1,15 @@
 package Pages.Darksky;
 
+import Helper.Misc;
 import Pages.Commands;
 import Web.MyDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LandingPage extends Commands {
 
@@ -32,30 +37,21 @@ public class LandingPage extends Commands {
         return scrollToTimeMachineButton().isEnabled();
     }
 
-    public void scrollToBottom() {
-        /**
-         * 3. scroll to the bottom of the page
-         *
-         * "window.scrollTo(0, document.body.scrollHeight)"
-         */
-
-        JavascriptExecutor js = (JavascriptExecutor) MyDriver.getDriver();
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-
-    }
-
     // method to click Time Machine button
     public void clickOnTimeMachine () {
-        clickIt(timeMachineLocator);
+        clickOn(timeMachineLocator);
     }
 
     public void scrollToTimeMachineByPixel () {
         JavascriptExecutor js =  (JavascriptExecutor) MyDriver.getDriver();
         js.executeScript("scrollBy(0,900)");
+        Misc.pause(3);
 
     }
 
-
+    public WebElement scrollToDailyDetails () {
+        return scrollToElement(dailyDetailsExpandLocator1);
+    }
 
     //click on Daily details expand button (current day)
     public void expandDailyDetailsForToday () {
@@ -68,13 +64,40 @@ public class LandingPage extends Commands {
         String initial = findWebElement(locator).getText();
         String [] array = initial.split("˚");
         String answer = array[0];
-        int answerInt = Integer.parseInt(answer);
 
-        return answerInt;
+        return Integer.parseInt(answer);
+    }
+
+    public boolean isTempBarEqualToTempExpand (By locatorTempHeader, By locatorTempExpand) {
+        int tempHeader = findTempValue(locatorTempHeader);
+        int tempExpanding = findTempValue(locatorTempExpand);
+
+        return (tempHeader == tempExpanding);
+    }
+
+    public boolean isLowTempBarEqualToLowTempExpand () {
+        return isTempBarEqualToTempExpand(todayBarMinLocator, dayDetailsMinTempLocator);
+    }
+
+    public boolean isHighTempBarEqualToHighTempExpand () {
+        return isTempBarEqualToTempExpand(todayBarMaxLocator, dayDetailsMaxTempLocator);
     }
 
 
-    // method to check if Time Machine button is displayed
+
+
+    public boolean isTodaysDateHighlighted () {
+        Date today = new Date();
+        SimpleDateFormat day = new SimpleDateFormat("d");
+        String expectedDate = day.format(today);
+
+        WebElement todaysDateOnTimeMachine = MyDriver.getDriver().findElement(By.xpath("//td[@class = 'is-today']"));
+
+        String actualDate = todaysDateOnTimeMachine.getAttribute("data-day");
+
+        return actualDate.equals(expectedDate);
+
+    }
 
 
 
